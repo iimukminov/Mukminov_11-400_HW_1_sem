@@ -41,11 +41,6 @@ public class HelloServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         String body = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         writer.println(body);
-        String id = req.getParameter("id");
-        if (id == null || id.isEmpty()) {
-            writer.write("No resource id provided to delete.");
-        } else {
-            writer.write("Resource with id = " + id + " deleted.");
-        }
+        writer.println("  Deleted " + body.split(",")[1].split(":")[1]);
     }
 }
