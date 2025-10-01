@@ -1,5 +1,6 @@
-package ru.kpfu.itis.mukminov.server;
+package ru.kpfu.itis.mukminov.servlet;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -13,32 +14,29 @@ import java.util.Map;
 public class LoginServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.sendRedirect("login.html");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.getRequestDispatcher("login.ftl").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-
         Map<String, String> usersData = SignUpServlet.getMapOfUserData();
 
         if (usersData.containsKey(login) && usersData.get(login).equals(password)) {
-            // logic to authenticate user
-
-            // session
+            //session
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
             httpSession.setMaxInactiveInterval(60 * 60);
 
-            // cookie
+            //cookie
             Cookie cookie = new Cookie("user", login);
             cookie.setMaxAge(24 * 60 * 60);
 
             resp.addCookie(cookie);
 
-            resp.sendRedirect("main.jsp");
+            resp.sendRedirect("/main");
         } else {
             resp.sendRedirect("/login");
         }

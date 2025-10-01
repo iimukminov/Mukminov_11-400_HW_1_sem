@@ -1,4 +1,4 @@
-package ru.kpfu.itis.mukminov.server;
+package ru.kpfu.itis.mukminov.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,22 +15,20 @@ public class SignUpServlet extends HttpServlet {
     private static Map<String, String> mapOfUserData = new HashMap<>();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.sendRedirect("signUp.html");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.getRequestDispatcher("signUp.ftl").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-        //Проверка данных на корректность
         if (login != null && password != null
                 && !login.isEmpty() && !password.isEmpty()
                 && !mapOfUserData.containsKey(login)) {
-
             mapOfUserData.put(login, password);
-            System.out.println("New user added: " + login +": " + password);
+            System.out.println("New user added: " + login + ": " + password);
             resp.sendRedirect("/login");
         } else {
             resp.sendRedirect("/signUp");
@@ -40,4 +38,9 @@ public class SignUpServlet extends HttpServlet {
     public static Map<String, String> getMapOfUserData() {
         return mapOfUserData;
     }
+
+
+
+
+
 }

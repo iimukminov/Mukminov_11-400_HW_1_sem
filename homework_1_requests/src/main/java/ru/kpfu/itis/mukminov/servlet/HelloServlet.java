@@ -1,4 +1,4 @@
-package ru.kpfu.itis.mukminov.server;
+package ru.kpfu.itis.mukminov.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
