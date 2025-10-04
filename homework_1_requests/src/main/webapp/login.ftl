@@ -1,9 +1,10 @@
-<html lang="en">
 <#include "base.ftl">
 
 <#macro title>Login page</#macro>
 
 <#macro content>
+    <a href="index.ftl">Главное меню</a>
+    <br>
     <form method="post" action="/login">
         Login:
         <input type="text" name="login" placeholder="type your login here">
@@ -13,5 +14,3 @@
         <input type="submit" value="login">
     </form>
 </#macro>
-
-</html>

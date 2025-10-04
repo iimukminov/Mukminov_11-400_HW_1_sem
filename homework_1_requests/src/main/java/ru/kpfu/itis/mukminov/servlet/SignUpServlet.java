@@ -1,10 +1,12 @@
 package ru.kpfu.itis.mukminov.servlet;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import ru.kpfu.itis.mukminov.service.impl.UserServiceImpl;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,7 +14,6 @@ import java.util.Map;
 
 @WebServlet(name = "SignUp", urlPatterns = "/signUp")
 public class SignUpServlet extends HttpServlet {
-    private static Map<String, String> mapOfUserData = new HashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -23,21 +24,17 @@ public class SignUpServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String name = req.getParameter("name");
+        String lastname = req.getParameter("lastname");
 
-        if (login != null && password != null
-                && !login.isEmpty() && !password.isEmpty()
-                && !mapOfUserData.containsKey(login)) {
-            mapOfUserData.put(login, password);
-            System.out.println("New user added: " + login + ": " + password);
+        if (UserServiceImpl.signUp(login, password, name, lastname)) {
             resp.sendRedirect("/login");
         } else {
-            resp.sendRedirect("/signUp");
+            resp.sendRedirect("userAlreadyExist.ftl");
         }
     }
 
-    public static Map<String, String> getMapOfUserData() {
-        return mapOfUserData;
-    }
+
 
 
 

@@ -1,12 +1,14 @@
 package ru.kpfu.itis.mukminov.servlet;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import ru.kpfu.itis.mukminov.service.impl.UserServiceImpl;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
 
@@ -22,9 +24,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        Map<String, String> usersData = SignUpServlet.getMapOfUserData();
 
-        if (usersData.containsKey(login) && usersData.get(login).equals(password)) {
+
+        if (UserServiceImpl.checkLoginPassword(login, password)) {
             //session
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
@@ -36,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 
             resp.addCookie(cookie);
 
-            resp.sendRedirect("/main");
+            resp.sendRedirect("successfulLogin.ftl");
         } else {
             resp.sendRedirect("/login");
         }
