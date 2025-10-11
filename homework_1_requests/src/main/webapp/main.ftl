@@ -5,6 +5,7 @@
 <#macro content>
     <a href="index.ftl">Главное меню</a>
     <br>
+    <br>
     <h3>
         Hello, ${sessionUser}! Login successful
         <br>

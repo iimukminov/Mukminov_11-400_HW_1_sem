@@ -20,12 +20,15 @@ public class UserServiceImpl implements UserService {
                 .toList();
     }
 
-    public static Boolean signUp(String login, String password, String name, String lastname) {
+    public static Integer signUp(String login, String password, String name, String lastname) {
+        if (login.isEmpty() || password.isEmpty()) {
+            return 2;
+        }
         if (userDao.getByLogin(login) != null) {
-            return false;
+            return 1;
         } else {
             userDao.save(new User(0, name, lastname, PasswordUtil.encrypt(password), login));
-            return true;
+            return 0;
         }
     }
 

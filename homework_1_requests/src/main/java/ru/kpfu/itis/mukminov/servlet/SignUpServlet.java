@@ -21,16 +21,21 @@ public class SignUpServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String name = req.getParameter("name");
         String lastname = req.getParameter("lastname");
 
-        if (UserServiceImpl.signUp(login, password, name, lastname)) {
+        Integer resSignUp = UserServiceImpl.signUp(login, password, name, lastname);
+        if (resSignUp == 0) {
             resp.sendRedirect("/login");
-        } else {
-            resp.sendRedirect("userAlreadyExist.ftl");
+        } else if (resSignUp == 1) {
+            req.setAttribute("signUpResult", "Sorry, but this user login already exist");
+            req.getRequestDispatcher("signUp.ftl").forward(req, resp);
+        } else if (resSignUp == 2) {
+            req.setAttribute("signUpResult", "You entered empty login or password");
+            req.getRequestDispatcher("signUp.ftl").forward(req, resp);
         }
     }
 

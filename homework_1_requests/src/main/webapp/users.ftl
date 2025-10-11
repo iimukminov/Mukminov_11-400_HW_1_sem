@@ -5,7 +5,7 @@
 <#macro content>
     <a href="index.ftl">Главное меню</a>
     <br>
-
+    <br>
     <#if users?has_content>
         Таблица рекордов:
         <br>
