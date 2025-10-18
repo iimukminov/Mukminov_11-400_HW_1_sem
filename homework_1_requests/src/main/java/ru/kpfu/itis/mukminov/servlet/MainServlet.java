@@ -1,5 +1,8 @@
 package ru.kpfu.itis.mukminov.servlet;
 
+import ru.kpfu.itis.mukminov.service.UserService;
+import ru.kpfu.itis.mukminov.service.impl.UserServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -17,6 +20,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String sessionUser = (String) req.getSession().getAttribute("user");
+        String imagePath = (String) req.getAttribute("src");
 
         if (sessionUser == null) {
             resp.sendRedirect("login.ftl");
@@ -42,6 +46,7 @@ public class MainServlet extends HttpServlet {
         req.setAttribute("sessionUser", sessionUser);
         req.setAttribute("sessionId", sessionId);
         req.setAttribute("cookieUser", cookieUser);
+        req.setAttribute("src", imagePath);
 
         req.getRequestDispatcher("main.ftl").forward(req, resp);
     }

@@ -8,16 +8,14 @@
         const login = $(this).val();
 
         $.get("/signUp/check", {login: login}, function (response) {
+            console.log(response)
             if (response !== "") {
-                $('input[type="submit"]').attr('disabled', true);
+                $('#button-submit').attr('disabled', true);
             } else {
-                $('input[type="submit"]').attr('disabled', false);
+                $('#button-submit').attr('disabled', false);
             }
             $("#entering-response").text(response)
         })
-
-
-
     })
 </script>
 
@@ -26,18 +24,23 @@
     <a href="index.ftl">Главное меню</a>
     <br>
     <br>
-    <form method="post" action="/signUp" style="display: flex;align-items: flex-start;gap: 10px;">
-        Login:
-        <div>
-            <input type="text" id="signUp-login" name="login" placeholder="LOGIN">
-            <p id="entering-response"></p>
-        </div>
-        Password:
+    <form method="post" action="/signUp" enctype="multipart/form-data">
+        Choose your photo:<br>
+        <input type="file" name="file">
+        <br>
+        Login:<br>
+        <input type="text" id="signUp-login" name="login" placeholder="LOGIN">
+        <p id="entering-response"></p>
+        <br>
+        Password:<br>
         <input type="password" name="password" placeholder="PASSWORD">
-        Name:
+        <br>
+        Name:<br>
         <input type="text" name="name" placeholder="NAME">
-        LastName:
+        <br>
+        LastName:<br>
         <input type="text" name="lastname" placeholder="LASTNAME">
+        <br>
 
         <input type="submit" id="button-submit" value="SIGN UP">
     </form>

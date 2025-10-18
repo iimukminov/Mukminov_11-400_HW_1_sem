@@ -7,6 +7,8 @@
     <br>
     <br>
     <h3>
+        <img src="${src}" alt="">
+        <br>
         Hello, ${sessionUser}! Login successful
         <br>
         Session ID = ${sessionId}

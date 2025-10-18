@@ -30,7 +30,8 @@ public class UserDaoImpl implements UserDao {
                                     resultSet.getString("name"),
                                     resultSet.getString("lastname"),
                                     resultSet.getString("password"),
-                                    resultSet.getString("login")
+                                    resultSet.getString("login"),
+                                    resultSet.getString("image_path")
                             )
                     );
                 }
@@ -44,7 +45,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        String sql = "insert into users (name, lastname, login, password) values (?, ?, ?, ?)";
+        String sql = "insert into users (name, lastname, login, password, image_path) values (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -52,6 +53,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.setString(2, user.getLastname());
             preparedStatement.setString(3, user.getLogin());
             preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getImagePath());
 
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -74,7 +76,8 @@ public class UserDaoImpl implements UserDao {
                             resultSet.getString("name"),
                             resultSet.getString("lastname"),
                             resultSet.getString("password"),
-                            resultSet.getString("login")
+                            resultSet.getString("login"),
+                            resultSet.getString("image_path")
                     );
                 }
             }
@@ -100,7 +103,8 @@ public class UserDaoImpl implements UserDao {
                             resultSet.getString("name"),
                             resultSet.getString("lastname"),
                             resultSet.getString("password"),
-                            resultSet.getString("login")
+                            resultSet.getString("login"),
+                            resultSet.getString("image_path")
                     );
                 }
             }

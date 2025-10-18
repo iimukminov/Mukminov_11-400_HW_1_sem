@@ -19,7 +19,7 @@ public class SignUpCheckServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        User user = userDao.getByLogin((String) req.getParameter("login"));
+        User user = userDao.getByLogin(req.getParameter("login"));
         resp.setContentType("text/plain");
 
         if (user != null) {

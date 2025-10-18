@@ -28,8 +28,11 @@ public class LoginServlet extends HttpServlet {
 
         if (UserServiceImpl.checkLoginPassword(login, password)) {
             //session
+            UserServiceImpl userService = new UserServiceImpl();
+
             HttpSession httpSession = req.getSession();
             httpSession.setAttribute("user", login);
+            httpSession.setAttribute("src", userService.getByLogin(login).getImagePath());
             httpSession.setMaxInactiveInterval(60 * 60);
 
             //cookie
@@ -38,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 
             resp.addCookie(cookie);
 
-            resp.sendRedirect("successfulLogin.ftl");
+            resp.sendRedirect("/main");
         } else {
             resp.sendRedirect("/login");
         }
