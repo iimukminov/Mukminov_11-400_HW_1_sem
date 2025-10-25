@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public static Boolean checkLoginPassword(String login,String password) {
+    public static boolean checkLoginPassword(String login,String password) {
         User user = userDao.getByLogin(login);
         return user != null && user.getPassword().equals(PasswordUtil.encrypt(password));
     }

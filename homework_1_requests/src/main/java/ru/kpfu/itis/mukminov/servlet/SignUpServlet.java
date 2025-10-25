@@ -1,6 +1,8 @@
 package ru.kpfu.itis.mukminov.servlet;
 
+import com.cloudinary.Cloudinary;
 import ru.kpfu.itis.mukminov.service.impl.UserServiceImpl;
+import ru.kpfu.itis.mukminov.util.CloudinaryUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -27,6 +29,7 @@ import java.util.Map;
 public class SignUpServlet extends HttpServlet {
     public static final String FILE_PREFIX = "/Users/ilyam/IdeaProjects/Mukminov_400_HW/homework_1_requests/src/main/webapp/img";
     public static final int DIRECTORIES_COUNT = 100;
+    public static final Cloudinary cloudinary = CloudinaryUtil.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -40,7 +43,7 @@ public class SignUpServlet extends HttpServlet {
         String name = req.getParameter("name");
         String lastname = req.getParameter("lastname");
 
-        Integer resSignUp = UserServiceImpl.signUp(login, password, name, lastname, uploadFile(req, resp));
+        int resSignUp = UserServiceImpl.signUp(login, password, name, lastname, uploadFile(req, resp));
         if (resSignUp == 0) {
             resp.sendRedirect("/login");
         } else if (resSignUp == 1) {
@@ -69,7 +72,9 @@ public class SignUpServlet extends HttpServlet {
         outputStream.write(buffer);
         outputStream.close();
 
-        return file.getPath().split("webapp")[1];
+        String filePath = cloudinary.uploader().upload(file, new HashMap<>()).get("url").toString();
+        return filePath;
+//        return file.getPath().split("webapp")[1];
     }
 
 
